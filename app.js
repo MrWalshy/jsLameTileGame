@@ -24,12 +24,50 @@ var map = {
     ],
     getTile: function(col, row){
         return this.tiles[row * map.cols + col];
+    },
+    getTileCoords: function(){
+        
     }
 };
 
-// Starting point for player
-var x = gameCanvas.width / 2;
-var y = gameCanvas.height - 200;
+function Player(){
+    this.width = 50;
+    this.height = 50;
+
+    this.x = gameCanvas.width / 2;
+    this.y = gameCanvas.height - 200;
+
+    this.setPosition = function(x, y){
+        this.x = x;
+        this.y = y;
+    };
+
+    this.drawPlayer = function(){
+        context.beginPath();
+        context.rect(this.x, this.y, this.width, this.height);
+        context.fillStyle = "blue";
+        context.fill();
+        context.closePath();
+    };
+    
+    this.moveUp = function(){
+        this.y -= 7;
+    };
+
+    this.moveDown = function(){
+        this.y += 7;
+    };
+
+    this.moveLeft = function(){
+        this.x -= 7;
+    };
+
+    this.moveRight = function(){
+        this.x += 7;
+    }
+}
+
+var newPlayer = new Player();
 
 // Keypress
 var upPressed = false;
@@ -85,29 +123,21 @@ function drawMap(){
     }
 }
 
-function drawPlayer(){
-    context.beginPath();
-    context.rect(x, y, 50, 10);
-    context.fillStyle = "blue";
-    context.fill();
-    context.closePath();
-}
-
 function draw(){
     gameCanvas.width = window.innerWidth;
     gameCanvas.height = window.innerHeight;
     
     drawMap();
-    drawPlayer();
+    newPlayer.drawPlayer();
 
     if(upPressed){
-        y -= 7;
+        newPlayer.moveUp();
     } else if(downPressed){
-        y += 7;
+        newPlayer.moveDown();
     } else if(leftPressed){
-        x -= 7;
+        newPlayer.moveLeft();
     } else if(rightPressed){
-        x += 7;
+        newPlayer.moveRight();
     }
 
     requestAnimationFrame(draw);
