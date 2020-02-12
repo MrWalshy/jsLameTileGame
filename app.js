@@ -51,19 +51,28 @@ function Player(){
     };
     
     this.moveUp = function(){
-        this.y -= 7;
+        if(this.y > gameCanvas.height / 8){
+            this.y -= 7;
+        }
     };
 
     this.moveDown = function(){
-        this.y += 7;
+        if(this.y < gameCanvas.height - map.tSizeY * 1.5){
+            this.y += 7;
+        }
+        
     };
 
     this.moveLeft = function(){
-        this.x -= 7;
+        if(this.x > gameCanvas.width / 8){
+            this.x -= 7;
+        }
     };
 
     this.moveRight = function(){
-        this.x += 7;
+        if(this.x < gameCanvas.width - map.tSizeX * 1.25){
+            this.x += 7;
+        }
     }
 }
 
@@ -114,6 +123,7 @@ function drawMap(){
 
             if(tile == 1){
                 context.fillStyle = "#000000";
+                // 0 * map.tSizeX... 1 * map.tSizeX
                 context.fillRect(c * map.tSizeX, r * map.tSizeY, map.tSizeX, map.tSizeY);
             } else if(tile == 2){
                 context.fillStyle = "#8B4513";
