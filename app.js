@@ -40,7 +40,7 @@ var map = {
                 tileCoords.push(temp);
             }
         }
-        console.log(tileCoords); // Format [x, y] where x is the row coords and y is the column coords
+        console.log(tileCoords); // Format [row, col] where row is the row coords and col is the column coords
     }
 };
 
