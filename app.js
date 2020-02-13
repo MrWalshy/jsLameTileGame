@@ -22,25 +22,26 @@ var map = {
         1, 0, 0, 0, 0, 0, 0, 1,
         1, 1, 1, 1, 1, 1, 1, 1
     ],
+
     getTile: function(col, row){
         return this.tiles[row * map.cols + col];
     },
-    getTileCoords: function(){
+    getTileIndex: function(){
         
     }
 };
 
 function Player(){
+    // Player size
     this.width = 50;
     this.height = 50;
-
+    
+    // Movement speed (any value is ok)
+    this.speed = 7;
+    
+    // Player position Start
     this.x = gameCanvas.width / 2;
     this.y = gameCanvas.height - 200;
-
-    this.setPosition = function(x, y){
-        this.x = x;
-        this.y = y;
-    };
 
     this.drawPlayer = function(){
         context.beginPath();
@@ -49,31 +50,25 @@ function Player(){
         context.fill();
         context.closePath();
     };
-    
-    this.moveUp = function(){
-        if(this.y > gameCanvas.height / 8){
-            this.y -= 7;
-        }
-    };
 
-    this.moveDown = function(){
-        if(this.y < gameCanvas.height - map.tSizeY * 1.5){
-            this.y += 7;
-        }
+    this.move = function(moveX, moveY){
+        // Move the player, then resolve collisions
+        // Borders
+        const left = map.tSizeX;
+        const top = map.tSizeY;
+        const right = gameCanvas.width - map.tSizeX - this.width;
+        const bottom = gameCanvas.height - map.tSizeY - this.height;
+
+        this.x += moveX;
+        this.y += moveY;
         
-    };
+        // Collision Detection (Resets player position if hitting the boundary)
+        if(this.x < left) {this.x = left}
+        else if(this.x > right) {this.x = right}
 
-    this.moveLeft = function(){
-        if(this.x > gameCanvas.width / 8){
-            this.x -= 7;
-        }
+        if(this.y < top) {this.y = top}
+        else if(this.y > bottom) {this.y = bottom}
     };
-
-    this.moveRight = function(){
-        if(this.x < gameCanvas.width - map.tSizeX * 1.25){
-            this.x += 7;
-        }
-    }
 }
 
 var newPlayer = new Player();
@@ -141,13 +136,13 @@ function draw(){
     newPlayer.drawPlayer();
 
     if(upPressed){
-        newPlayer.moveUp();
+        newPlayer.move(0, -newPlayer.speed);
     } else if(downPressed){
-        newPlayer.moveDown();
+        newPlayer.move(0, newPlayer.speed);
     } else if(leftPressed){
-        newPlayer.moveLeft();
+        newPlayer.move(-newPlayer.speed, 0);
     } else if(rightPressed){
-        newPlayer.moveRight();
+        newPlayer.move(newPlayer.speed, 0);
     }
 
     requestAnimationFrame(draw);
