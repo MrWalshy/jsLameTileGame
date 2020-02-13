@@ -2,7 +2,8 @@
 - A project I have enacted on to test my abilities in JS.
 - As I progress, new features and changes will be added and made.
 
-# Needs refactoring
-- The code is ugly!
+# Coming Features
+- Refactoring of ugly ass code xD
+- Collision based off of tile coords & player coords
 
 # Bugs

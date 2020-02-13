@@ -12,6 +12,7 @@ var map = {
     rows: 8,
     tSizeX: gameCanvas.width / 8,
     tSizeY: gameCanvas.height / 8,
+    tileAmount: this.rows * this.cols,
     tiles: [
         1, 1, 1, 1, 1, 1, 1, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
@@ -23,11 +24,23 @@ var map = {
         1, 1, 1, 1, 1, 1, 1, 1
     ],
 
+    playerOnTile: [3][4], // [row][column]
+
     getTile: function(col, row){
         return this.tiles[row * map.cols + col];
     },
-    getTileIndex: function(){
-        
+    getTileCoordMap: function(){
+        var tileCoords = [];
+        var temp;
+
+        for(let row = 0; row < this.rows; row++){
+            for(let col = 0; col < this.cols; col++){
+                temp = [row * this.tSizeY, col * this.tSizeX];
+
+                tileCoords.push(temp);
+            }
+        }
+        console.log(tileCoords); // Format [x, y]
     }
 };
 
@@ -68,6 +81,10 @@ function Player(){
 
         if(this.y < top) {this.y = top}
         else if(this.y > bottom) {this.y = bottom}
+    };
+
+    this.currentLocation = function(){
+        console.log(this.x, this.y);
     };
 }
 
@@ -147,5 +164,6 @@ function draw(){
 
     requestAnimationFrame(draw);
 }
-
+map.getTileCoordMap();
+newPlayer.currentLocation();
 draw();
