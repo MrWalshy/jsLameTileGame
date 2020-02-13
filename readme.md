@@ -6,4 +6,3 @@
 - The code is ugly!
 
 # Bugs
-- Collision detection isn't precise
